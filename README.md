@@ -145,7 +145,6 @@ docker run -d \
   -p 1111:1111 \
   --sysctl net.ipv4.conf.all.src_valid_mark=1 \
   -v $PWD/warp-data:/var/lib/cloudflare-warp \
-  -e UPSTREAM_PROXY= \ 
    mafei0018/vh-warp:latest
 ```
 
@@ -317,8 +316,7 @@ docker run -d \
   --device=/dev/net/tun \
   -p 1111:1111 \
   --sysctl net.ipv4.conf.all.src_valid_mark=1 \
-  -v $PWD/warp-data:/var/lib/cloudflare-warp \
-  -e UPSTREAM_PROXY= \ 
+  -v $PWD/warp-data:/var/lib/cloudflare-warp \ 
   mafei0018/vh-warp:latest
 ```
 
