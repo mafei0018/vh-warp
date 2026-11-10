@@ -145,7 +145,8 @@ docker run -d \
   -p 1111:1111 \
   --sysctl net.ipv4.conf.all.src_valid_mark=1 \
   -v $PWD/warp-data:/var/lib/cloudflare-warp \
-  uxiaohan/vh-warp:latest
+  -e UPSTREAM_PROXY= \ 
+   mafei0018/vh-warp:latest
 ```
 
 > Default timezone is `Asia/Shanghai`. Override with `-e TZ=Europe/London`. After WARP connects, all DNS traffic goes through the tunnel — no extra system DNS config needed.
