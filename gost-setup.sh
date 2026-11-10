@@ -15,7 +15,19 @@ start_gost() {
 
     log "🚀 启动 GOST 代理 (mixed SOCKS5+HTTP 监听 0.0.0.0:1111)..."
 
-    gost -L "mixed://0.0.0.0:1111?udp=true&nodelay=true&backlog=4096&readTimeout=0&idleTimeout=600s&tcpKeepAlive=true&keepAlivePeriod=60&readBufferSize=66666&writeBufferSize=66666" >> "$LOG_FILE" 2>&1 &
+    # 构造参数数组，UPSTREAM_PROXY 非空时追加 -F 转发链
+    local gost_args=(
+        -L "mixed://0.0.0.0:1111?udp=true&nodelay=true&backlog=4096&readTimeout=0&idleTimeout=600s&tcpKeepAlive=true&keepAlivePeriod=60&readBufferSize=66666&writeBufferSize=66666"
+    )
+
+    if [ -n "$UPSTREAM_PROXY" ]; then
+        gost_args+=(-F "$UPSTREAM_PROXY")
+        log "🔗 已启用上游代理: $UPSTREAM_PROXY"
+    else
+        log "ℹ️ 未设置 UPSTREAM_PROXY，直连模式"
+    fi
+
+    gost "${gost_args[@]}" >> "$LOG_FILE" 2>&1 &
 
     local i=0
     while [ $i -lt 10 ]; do
