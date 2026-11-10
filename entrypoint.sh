@@ -77,6 +77,12 @@ else
     log "⚠️ warp-cli 未就绪，跳过自动配置，代理将暂时使用直连"
 fi
 
+if [ -n "$UPSTREAM_PROXY" ]; then
+    log "🔗 上游代理已配置: $UPSTREAM_PROXY"
+else
+    log "ℹ️ 未配置上游代理，GOST 将直连"
+fi
+
 /usr/local/bin/gost-setup.sh start
 
 connect_warp() {
