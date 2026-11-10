@@ -317,7 +317,8 @@ docker run -d \
   -p 1111:1111 \
   --sysctl net.ipv4.conf.all.src_valid_mark=1 \
   -v $PWD/warp-data:/var/lib/cloudflare-warp \
-  uxiaohan/vh-warp:latest
+  -e UPSTREAM_PROXY= \ 
+  mafei0018/vh-warp:latest
 ```
 
 > 镜像默认时区 `Asia/Shanghai`，可通过 `-e TZ=Europe/London` 覆盖。WARP 连接后 DNS 全部走隧道，无需额外配系统 DNS。
